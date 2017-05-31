@@ -26,17 +26,18 @@ public class Main {
 
         Document doc = null;
         String url= null;
+        String metotodo;
         int flag = 0;
 
         while (flag == 0) {
 
             try {
-                print("Introduzca una URL valida: ");
+             /*   print("Introduzca una URL valida: ");
                 Scanner in = new Scanner(System.in);
                 //int i = in.nextInt();
-                url = in.next();
+                url = in.next();*/
                 //http://navaloan.com/
-                //String url = "http://navaloan.com/login/index";
+                url = "http://itachi.avathartech.com:4567/2017.html";
 
                 print("Fetching %s...", url);
 
@@ -69,20 +70,22 @@ public class Main {
 
         print("Parrafos: (%d)", parrafos.size());
 
-        print("Forms: (%d)", parrafos.size());
+
+        print("Forms: (%d)", formularios.size());
         for (Element form : formularios){
             print(" * %s <%s> (%s)", form.tagName() ,form.attr("method"), form.attr("action"));
 
             for (Element input : form.children()){
 
                 if(input.tagName() == "input"){
-                    print("  - %s <%s> (%s)", input.tagName() ,input.attr("type"), input.attr("id"));
+                    print("  - %s <%s> (%s) (%s)", input.tagName() ,input.attr("type"), input.attr("id"), input.attr("name"));
                 }
             }
 
-            String metotodo = form.attr("method").toString();
-            System.out.println(metotodo);
-            if(metotodo == "post" || metotodo == "POST" ){
+            metotodo = form.attr("method");
+           // System.out.println(metotodo);
+            System.out.println("\n");
+            if(metotodo == "post" ){
 
                 print("Enviando parametros...");
 
