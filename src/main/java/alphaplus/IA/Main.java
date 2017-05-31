@@ -25,7 +25,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         Document doc = null;
+        Document docs = null;
         String url= null;
+        String url_request = null;
         String metotodo;
         int flag = 0;
 
@@ -38,10 +40,12 @@ public class Main {
                 url = in.next();*/
                 //http://navaloan.com/
                 url = "http://itachi.avathartech.com:4567/2017.html";
+                url_request ="http://itachi.avathartech.com:4567";
 
                 print("Fetching %s...", url);
 
                 doc = Jsoup.connect(url).get();
+                //docs = Jsoup.connect(url).execute().body();
                 flag = 1;
 
             } catch (Exception e) {
@@ -58,7 +62,7 @@ public class Main {
         Elements inputs = doc.select("input");
 
 
-        String[] codigo = doc.html().toString().split("\n");
+        String[] codigo = Jsoup.connect(url).execute().body().split("\n");
         /*
         for (String linea: codigo) {
             println(linea);
@@ -83,9 +87,9 @@ public class Main {
             }
 
             metotodo = form.attr("method");
-           // System.out.println(metotodo);
+            System.out.println(metotodo);
             System.out.println("\n");
-            if(metotodo == "post" ){
+            if(metotodo.equalsIgnoreCase("post") ){
 
                 print("Enviando parametros...");
 
@@ -93,7 +97,7 @@ public class Main {
                         .method(Connection.Method.GET)
                         .execute();
 
-                Document document = Jsoup.connect(form.attr("action"))
+                Document document = Jsoup.connect( url_request +  form.attr("action"))
                         .data("asignatura", "practica1")
                         .cookies(loginForm.cookies())
                         .post();
